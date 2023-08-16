@@ -32,5 +32,6 @@ watch(loading, async () => {
 </script>
 
 <template>
+    <h1 class="text-red-500">Hello Index</h1>
     <testComponent v-if="!loading" :loading=loading :socket=socket></testComponent>
 </template>

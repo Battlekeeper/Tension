@@ -9,6 +9,8 @@ import { ObjectId } from 'mongodb';
 import bodyParser from "body-parser"
 import { v4 as uuidv4 } from 'uuid';
 import cookieParser from "cookie-parser"
+import TServer from './Models/TServer';
+import TChannel from './Models/TMessage';
 
 
 const app: Express = express();
@@ -96,6 +98,20 @@ io.on('connection', (socket) => {
             return
         }
         callback(await TUser.get(userId))
+    })
+    socket.on("getServer",async (serverId, callback) => {
+        if (!token)
+        {
+            return
+        }
+        callback(await TServer.get(serverId))
+    })
+    socket.on("getChannel",async (channelId, callback) => {
+        if (!token)
+        {
+            return
+        }
+        callback(await TChannel.get(channelId))
     })
 });
 
