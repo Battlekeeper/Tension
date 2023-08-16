@@ -1,0 +1,6 @@
+{
+	"ignore": [".git", "node_modules", "dist"],
+	"watch": ["./backend/**"],
+	"exec": "ts-node backend/index.ts",
+	"ext": "ts"
+  }
