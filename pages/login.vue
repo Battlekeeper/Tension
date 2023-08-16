@@ -12,7 +12,7 @@
             credentials: "include"
         })
         if (response.status == 200){
-            console.log(response.status)
+            window.location.href = "/"
         }
     }
 </script>

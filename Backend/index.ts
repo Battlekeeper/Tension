@@ -54,7 +54,7 @@ app.post('/user/authenticate', async (req: Request, res: Response) => {
 });
 
 app.get('/user/create', (req: Request, res: Response) => {
-    var user = new TUser(new ObjectId(),"1","2","3", {})
+    var user = new TUser(new ObjectId(),"1","2","3", {}, [])
     user.create()
     res.send(user)
 });
@@ -73,8 +73,30 @@ instrument(io, {
     },
 });
 
+
+
 io.on('connection', (socket) => {
-    console.log('a user connected');
+    var token:string
+    var user:TUser
+    socket.on("auth", async (tokenTemp, callback) => {
+        if (!token){
+            var tempUser = await TUser.get("", {[`tokens.${tokenTemp}`]: {'$exists': true}})
+            if (tempUser)
+            {
+                token = tokenTemp
+                callback(true)
+            } else {
+                callback(false)
+            }
+        }
+    });
+    socket.on("getUser",async (userId, callback) => {
+        if (!token)
+        {
+            return
+        }
+        callback(await TUser.get(userId))
+    })
 });
 
 server.listen(port, () => {

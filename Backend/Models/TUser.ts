@@ -10,13 +10,15 @@ export default class TUser
     passwordHash:string
     displayName:string
     tokens:Record<string, number>
+    servers:Array<string>
 
-    constructor(_id:ObjectId, username:string, password:string, displayName:string, tokens:Record<string, number>){
+    constructor(_id:ObjectId, username:string, password:string, displayName:string, tokens:Record<string, number>, servers:Array<string>){
         this._id = _id;
         this.username = username
         this.passwordHash = password;
         this.displayName = displayName
         this.tokens = tokens
+        this.servers = servers
     }
     public create(){
         this.passwordHash = Bcrypt.hashSync(this.passwordHash,  10)
@@ -29,7 +31,7 @@ export default class TUser
     {
         var document = await TDatabase.Users.findOne(filter)
         if (document?._id != undefined){
-            return new TUser(document?._id, document?.username, document?.passwordHash, document?.displayName, document?.tokens)
+            return new TUser(document?._id, document?.username, document?.passwordHash, document?.displayName, document?.tokens, document?.servers)
         } else {
             return undefined
         }
