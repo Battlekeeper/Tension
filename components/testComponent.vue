@@ -22,5 +22,5 @@ watch(props, async ()=>{
 </script>
 
 <template>
-    <h1 class=" text-red-500">Hello</h1>
+    <h1 class="text-red-500">Hello Component</h1>
 </template>
