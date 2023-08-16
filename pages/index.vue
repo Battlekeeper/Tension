@@ -13,7 +13,7 @@ const token = ref(Cookie.get("token"))
 const loading = ref(true)
 
 
-var socket = io('ws://localhost:3001')
+var socket = io('ws://localhost:3001') as unknown as Socket<DefaultEventsMap, DefaultEventsMap>
 socket.on('connect', async ()=>{
     socket.emit("auth", token.value, async (response:boolean) => {
         if (!response){
@@ -24,21 +24,11 @@ socket.on('connect', async ()=>{
     })
 })
 
-function getUser(userid:string) {
-    return new Promise((resolve, reject) => {
-        socket.emit("getUser", userid, (user:TUser)=> {
-            resolve(user)
-            }
-        );
-    });
-}
-
 watch(loading, async () => {
     if (!loading.value){
-        
+        getUser(socket, "64dbd32fdcdd7f4f9b44ee49")
     }
 })
-
 </script>
 
 <template>
