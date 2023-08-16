@@ -14,8 +14,17 @@ export function getUser(socket:Socket<DefaultEventsMap, DefaultEventsMap>, userI
 
 export function getServer(socket:Socket<DefaultEventsMap, DefaultEventsMap>, serverId:string) {
     return new Promise((resolve, reject) => {
-        socket.emit("getUser", serverId, (server:TServer) => {
+        socket.emit("getServer", serverId, (server:TServer) => {
                 resolve(server)
+            }
+        );
+    });
+}
+
+export function getChannel(socket:Socket<DefaultEventsMap, DefaultEventsMap>, channelId:string) {
+    return new Promise((resolve, reject) => {
+        socket.emit("getChannel", channelId, (channel:TServer) => {
+                resolve(channel)
             }
         );
     });
