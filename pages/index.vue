@@ -26,7 +26,7 @@ const currentChannel:Ref<TChannel> = ref(undefined as unknown as TChannel)
 const loading = ref(true)
 const softload = ref(true)
 
-var socket = io('ws://localhost:3001') as unknown as Socket<DefaultEventsMap, DefaultEventsMap>
+var socket = io('wss://tensionapi.battlekeeper.com') as unknown as Socket<DefaultEventsMap, DefaultEventsMap>
 socket.on('connect', async ()=>{
     socket.emit("auth", token.value, async (response:boolean, user:TUser) => {
         if (!response){

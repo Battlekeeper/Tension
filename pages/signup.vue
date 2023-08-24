@@ -21,7 +21,7 @@
             errorMessage.value = "Passwords do not match"
             return
         }
-        var response = await fetch("http://localhost:3001/user/create", {
+        var response = await fetch("https://tensionapi.battlekeeper.com/user/create", {
             method: "post",
             headers: {
                 "Content-Type": "application/json"

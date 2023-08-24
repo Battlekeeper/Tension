@@ -28,15 +28,15 @@ async function loaded(){
     if (!props.loading && props.currentChannel != undefined)
     {
         //@ts-ignore
-        var messagesRaw = await getChannelMessages(socket, props.currentChannel, 0, 9999)
-        messagesRaw = messagesRaw.reverse()
+        var group = await getChannelMessages(socket, props.currentChannel, 0, 9999)
+        var messagesRaw = group.messages.reverse()
+        var usersRaw = group.users.reverse()
         messages.value = []
 
         for (let index = 0; index < messagesRaw.length; index++) {
             var message = messagesRaw[index];
             var obj:any = {} 
-            //@ts-ignore
-            obj.user = await getUser(socket, message.authorId)
+            obj.user = usersRaw[index]
             obj.message = message
             messages.value.unshift(obj)
         }

@@ -6,7 +6,7 @@
     var errorMessage = ref()
 
     async function login(){
-        var response = await fetch("http://localhost:3001/user/authenticate", {
+        var response = await fetch("https://tensionapi.battlekeeper.com/user/authenticate", {
             method: "post",
             headers: {
                 "Content-Type": "application/json"
@@ -15,9 +15,11 @@
             credentials: "include"
         })
         if (response.status == 200){
+            var json = await response.json()
+            document.cookie = "token=" + json.token
             window.location.href = "/"
         }
-        if (response.status == 404){
+        if (response.status == 401){
             username.value = undefined
             password.value = undefined
             errorMessage.value = "Username or Password is incorrect"

@@ -12,18 +12,14 @@ import cookieParser from "cookie-parser"
 import TServer from './Models/TServer';
 import TChannel from './Models/TChannel';
 import TMessage from './Models/TMessage';
-import * as fs from 'fs';
-import { channel } from 'diagnostics_channel';
-
-const opusscript = require('opusscript');
 
 const app: Express = express();
-const port = 3001;
+const port = 32081;
 const server = http.createServer(app);
 new TDatabase
 
 app.use(cors({
-	origin: 'http://localhost:3000',
+	origin: 'https://tension.battlekeeper.com',
 	optionsSuccessStatus: 200,
 	credentials:true
 }))
@@ -42,7 +38,7 @@ app.post('/user/authenticate', async (req: Request, res: Response) => {
     user = await TUser.get("", {username: body.username})
     if (!user)
     {
-        res.status(404)
+        res.status(401)
         res.send()
         return
     }
@@ -50,8 +46,8 @@ app.post('/user/authenticate', async (req: Request, res: Response) => {
         var token = await user.genToken()
         await user.update()
         res.status(200)
-        res.cookie('token', token)
-        res.send()
+        res.cookie('token', token, {sameSite: "none", secure: true})
+        res.send({'token': token})
         return
     }
     res.status(401)
@@ -88,7 +84,7 @@ app.post('/user/create', async (req: Request, res: Response) => {
 
 const io = new Server(server, {
     cors: {
-        origin: ["https://admin.socket.io", 'http://localhost:3000'],
+        origin: ["https://admin.socket.io", 'http://localhost:3000', 'https://tension.battlekeeper.com'],
         credentials: true
     }
 });
@@ -152,7 +148,14 @@ io.on('connection', (socket) => {
         if (channel == undefined){
             return
         }
-        callback(await channel.getMessages(startIndex, endIndex))
+        var messages = await channel.getMessages(startIndex, endIndex)
+        var users = []
+        for (let index = 0; index < messages.length; index++) {
+            const msg = messages[index];
+            users.push(await TUser.get(msg.authorId))
+        }
+
+        callback(messages, users)
     })
     socket.on("roomMessageListen", async (channelId:string) => {
         if (messageRoom != undefined){

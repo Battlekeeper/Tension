@@ -1,4 +1,7 @@
 {
+  "version": "1.0.0",
+  "description": "Tension chat app",
+  "author": "Battlekeeper",
   "name": "nuxt-app",
   "private": true,
   "main": "dist-electron/main.js",
@@ -10,7 +13,9 @@
     "devold": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "app:dir": "electron-builder --dir",
+    "app:dist": "electron-builder"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
@@ -41,6 +46,7 @@
     "express": "^4.18.2",
     "js-cookie": "^3.0.5",
     "mongodb": "^5.7.0",
+    "node-pre-gyp": "^0.17.0",
     "nodemon": "^3.0.1",
     "opus-stream-decoder": "^1.2.7",
     "opus-to-pcm": "^1.0.2",
@@ -50,5 +56,11 @@
     "symbl-opus-encdec": "^0.1.2",
     "ts-node": "^10.9.1",
     "uuid": "^9.0.0"
+  },
+  "build": {
+    "appId": "tension",
+    "mac": {
+      "category": "social.chat"
+    }
   }
 }

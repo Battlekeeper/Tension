@@ -59,13 +59,13 @@ export function getServerChannels(socket:Socket<DefaultEventsMap, DefaultEventsM
 }
 
 export function getChannelMessages(socket:Socket<DefaultEventsMap, DefaultEventsMap>, channel:TChannel, startIndex:number, endIndex:number) {
-    return new Promise<Array<TMessage>>(async (resolve, reject) => {
+    return new Promise<{ messages: TMessage[]; users: TUser[]; }>(async (resolve, reject) => {
         if (channel == undefined){
-            resolve([])
+            resolve({ messages: [], users: [] })
             return
         }
-        socket.emit("getChannelMessages", channel._id, startIndex, endIndex, (messages:Array<TMessage>) => {
-                resolve(messages)
+        socket.emit("getChannelMessages", channel._id, startIndex, endIndex, (messages:Array<TMessage>, users:Array<TUser>) => {
+                resolve({'messages': messages, 'users': users})
             }
         );
     });
