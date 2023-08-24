@@ -28,7 +28,7 @@ async function loaded(){
     if (!props.loading && props.currentChannel != undefined)
     {
         //@ts-ignore
-        var messagesRaw = await getChannelMessages(socket, props.currentChannel, 0, 30)
+        var messagesRaw = await getChannelMessages(socket, props.currentChannel, 0, 9999)
         messagesRaw = messagesRaw.reverse()
         messages.value = []
 

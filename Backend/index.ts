@@ -85,6 +85,7 @@ app.post('/user/create', async (req: Request, res: Response) => {
     return
 });
 
+
 const io = new Server(server, {
     cors: {
         origin: ["https://admin.socket.io", 'http://localhost:3000'],
@@ -247,6 +248,35 @@ io.on('connection', (socket) => {
                 const server = user.servers[index]
                 io.to(server).emit("serverUpdate")
             }
+        }
+    })
+    socket.on("joinUserServer", async (serverId:string) => {
+        var server = await TServer.get(serverId)
+        var tempUser = await TUser.get(user._id)
+
+        if(server && tempUser && !tempUser.servers.find(x => x == serverId)){
+            tempUser.servers.push(serverId)
+            await tempUser.update()
+            tempUser.tokens = {}
+            tempUser.passwordHash = ""
+            user = tempUser
+            socket.emit("userUpdate", user)
+            io.to(server._id.toString()).emit("serverUpdate")
+        }
+    })
+    socket.on('createUserServer',async (serverName:string) => {
+        var tempUser = await TUser.get(user._id)
+
+        if (serverName && tempUser){
+            var newServer = new TServer(new ObjectId(), [], serverName)
+            
+            await newServer.create()
+            tempUser.servers.push(newServer._id.toString())
+            await tempUser.update()
+            tempUser.tokens = {}
+            tempUser.passwordHash = ""
+            user = tempUser
+            socket.emit("userUpdate", user)
         }
     })
 });

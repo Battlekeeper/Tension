@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { contextIsolated } from 'process';
 
 const emits = defineEmits(["close"])
 const background = ref()

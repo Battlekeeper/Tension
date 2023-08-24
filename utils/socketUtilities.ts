@@ -2,6 +2,7 @@ import TChannel from "Backend/Models/TChannel";
 import TMessage from "Backend/Models/TMessage";
 import TServer from "Backend/Models/TServer";
 import TUser from "Backend/Models/TUser";
+import { server } from "process";
 import { Socket } from "socket.io";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
 
@@ -114,4 +115,11 @@ export function leaveUserServer(socket:Socket<DefaultEventsMap, DefaultEventsMap
 export function setUserDisplayName(socket:Socket<DefaultEventsMap, DefaultEventsMap>, newName:string)
 {
     socket.emit('setUserDisplayName', newName)
+}
+export function joinUserServer(socket:Socket<DefaultEventsMap, DefaultEventsMap>, serverId:string){
+    socket.emit('joinUserServer', serverId)
+}
+export function createUserServer(socket:Socket<DefaultEventsMap, DefaultEventsMap>, serverName:string)
+{
+    socket.emit('createUserServer', serverName)
 }

@@ -192,6 +192,8 @@ watch(props, async ()=>{
             <div class="flex flex-col gap-2 ">
                 <p class="text-gray-300 font-semibold">Edit Server Name</p>
                 <input v-model="serverRename">
+                <p class="text-gray-300 font-semibold">Server Id:</p>
+                <p class="text-gray-300 font-semibold">{{currentServer._id}}</p>
             </div>
             <div class="flex flex-col gap-2 justify-between">
                 <div class="flex flex-col gap-2">

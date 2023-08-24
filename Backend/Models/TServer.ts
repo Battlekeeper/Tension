@@ -26,6 +26,9 @@ export default class TServer
     public async update(){
         await TDatabase.Servers.replaceOne({_id: this._id}, this)
     }
+    public async create(){
+        await TDatabase.Servers.insertOne(this)
+    }
     public async getServerMembers(){
         var documents = await (await TDatabase.Users.find({servers: {$all: [this._id.toString()]}})).toArray();
         var members:Array<TUser> = [];

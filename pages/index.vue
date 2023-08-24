@@ -39,11 +39,13 @@ socket.on('connect', async ()=>{
     })
     socket.on("userUpdate", (user:TUser) => {
         loading.value = true
-        if (!user.servers.find(x => x == currentServer.value._id.toString())){
-            //@ts-ignore
-            currentServer.value = undefined
-            //@ts-ignore
-            currentChannel.value = undefined
+        if (currentServer.value){
+            if (!user.servers.find(x => x == currentServer.value._id.toString())){
+                //@ts-ignore
+                currentServer.value = undefined
+                //@ts-ignore
+                currentChannel.value = undefined
+            }
         }
         currentUser.value = user
         nextTick(()=>{
