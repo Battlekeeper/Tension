@@ -12,9 +12,6 @@ async function loaded(){
         
     }
 }
-
-
-
 loaded()
 watch(props, async ()=>{
     loaded()
@@ -22,5 +19,7 @@ watch(props, async ()=>{
 </script>
 
 <template>
-    <h1 class="text-red-500">Hello Component</h1>
+    <div class="w-32">
+        <h1 class="text-red-500">Hello Component</h1>
+    </div>
 </template>

@@ -49,16 +49,16 @@ export default class TUser
                 return true
             } else {
                 delete user.tokens[token]
-                user.update()
+                await user.update()
                 return false
             }
         }
         return false;
     }
-    public genToken(){
+    public async genToken(){
         var token:string = uuidv4()
         this.tokens[token] = Date.now() + 86400000
-        this.update()
+        await this.update()
         return token
     }
 }

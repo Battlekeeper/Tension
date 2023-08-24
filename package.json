@@ -42,8 +42,12 @@
     "js-cookie": "^3.0.5",
     "mongodb": "^5.7.0",
     "nodemon": "^3.0.1",
+    "opus-stream-decoder": "^1.2.7",
+    "opus-to-pcm": "^1.0.2",
+    "opusscript": "^0.1.0",
     "socket.io": "^4.7.2",
     "socket.io-client": "^4.7.2",
+    "symbl-opus-encdec": "^0.1.2",
     "ts-node": "^10.9.1",
     "uuid": "^9.0.0"
   }

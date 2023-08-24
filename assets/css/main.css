@@ -1,3 +1,44 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    .bg-btn-primary {
+        background-color: #70EE9C;
+    }
+    .bg-btn-secondary {
+        background-color: #907AD6;
+    }
+    .bg-btn-warning {
+      background-color: #ef4444;
+    }
+    .bg-accent {
+        background-color: #4F518C;
+    }
+    .bg-primary {
+        background-color: #2C2A4A;
+    }
+}
+
+@layer base {
+	body {
+		@apply bg-[#2C2A4A];
+	}
+}
+
+
+  
+  *::-webkit-scrollbar {
+    width: 5px;
+    background-color: none;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background: none;
+    border-radius: 5px;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background-color: #907AD6;
+    border-radius: 10px;
+  }
